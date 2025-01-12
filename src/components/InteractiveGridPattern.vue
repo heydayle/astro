@@ -5,7 +5,6 @@ const cols = ref(0)
 const rows = ref(0)
 
 const updateGrid = () => {
-  console.log('updateGrid')
   cols.value = 0
   rows.value = 0
   cols.value = Math.ceil((window.innerWidth) / 50)
@@ -78,7 +77,7 @@ const getRandomClass = () => {
               height="50"
               mask="url(#fade-mask)"
               :class="getRandomClass()"
-              class="transition-all duration-1000 ease-in-out hover:fill-slate-100/10"
+              class="transition-all duration-300 ease-in-out hover:fill-slate-100/10"
             />
           </template>
         </template>
