@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-
+import {TextAnimate} from "@/components/ui/text-animate.tsx";
 
 const ReactComponent: React.FC = () => {
 
@@ -11,7 +11,10 @@ const ReactComponent: React.FC = () => {
 
     return (
         <div>
-            <h1>Hello, React!</h1>
+
+            <TextAnimate animation="blurInUp" by="character" className={'text-2xl'}>
+                Hello, React!
+            </TextAnimate>
             <div>
                 <p>Count: {count}</p>
                 <button onClick={onIncrease}>Increase</button>

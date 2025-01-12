@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Title from './Title.vue'
 import { ref } from 'vue';
+
 const count = ref(0)
 const increase = () => {
     count.value += 1

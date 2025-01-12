@@ -7,5 +7,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), react(), tailwind()]
+  integrations: [vue(), react({ include: ['**/react/*', '**/shared/*'] }), tailwind({
+    applyBaseStyles: false,
+  })],
 });

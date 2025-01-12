@@ -1,6 +1,9 @@
 ---
+import { DockDemo } from '@/components/shared/Header'
 const { title } = Astro.props;
 const pageTitle = title || "Astro";
+import '@/styles/global.css'
+import {Header} from "../components/shared/Header";
 ---
 
 <!doctype html>
@@ -10,9 +13,11 @@ const pageTitle = title || "Astro";
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={pageTitle} />
+		<!--<link rel="stylesheet" href="../styles/global.css" />-->
 		<title>{pageTitle}</title>
 	</head>
 	<body>
+		<Header client:only="react"/>
 		<slot />
 	</body>
 </html>
