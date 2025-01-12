@@ -10,7 +10,7 @@ export function Header() {
             <TextAnimate animation="blurInUp" by="character" className={'text-center'}>
                 Hello, I'm Heyday
             </TextAnimate>
-            <DockDemo className={'mt-0'}/>
+            <DockDemo />
         </div>
     );
 }
