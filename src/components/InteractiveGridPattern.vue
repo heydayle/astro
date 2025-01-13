@@ -5,8 +5,8 @@ const cols = ref(0)
 const rows = ref(0)
 
 const updateGrid = () => {
-  cols.value = Math.ceil((window.innerWidth) / 30)
-  rows.value = Math.ceil((window.innerHeight) / 30)
+  cols.value = Math.ceil((window.innerWidth) / 70)
+  rows.value = Math.ceil((window.innerHeight) / 70)
 }
 const { resume } = useIntervalFn(() => updateGrid(), 1400)
 
@@ -84,8 +84,8 @@ const getRandomColorHover = () => {
             :key="`row-${y}`"
           >
             <rect
-              :x="(x - 1) * 30"
-              :y="(y - 1) * 30"
+              :x="(x - 1) * 70"
+              :y="(y - 1) * 70"
               width="30"
               height="30"
               mask="url(#fade-mask)"
