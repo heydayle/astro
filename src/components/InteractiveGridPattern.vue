@@ -5,10 +5,14 @@ import { useWindowSize } from '@vueuse/core'
 const { width, height } = useWindowSize()
 const SIZE = 60
 
-const cells = computed(() => {
-  const cols = Math.ceil(width.value / SIZE)
-  const rows = Math.ceil(height.value / SIZE)
-  return cols * rows
+const cells = ref(1)
+
+onMounted(() => {
+  if (width.value && height.value) {
+    const cols = Math.ceil(width.value / SIZE) || 1
+    const rows = Math.ceil(height.value / SIZE) || 1
+    cells.value = cols * rows
+  }
 })
 
 const gridStyle = computed(() => ({
