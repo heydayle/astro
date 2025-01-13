@@ -1,109 +1,60 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
-import { useThrottleFn } from '@vueuse/core'
+import { ref, onMounted, computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
-const cols = ref(0)
-const rows = ref(0)
-const SIZE = 50
+const { width, height } = useWindowSize()
+const SIZE = 60
 
-// Compute grid cells only when dimensions change
-const gridCells = computed(() => {
-  const cells = []
-  for (let x = 0; x < cols.value; x++) {
-    for (let y = 0; y < rows.value; y++) {
-      // Pre-compute random hover color class
-      const hoverClass = getRandomColorHover()
-      cells.push({
-        x: x * SIZE,
-        y: y * SIZE,
-        size: SIZE,
-        class: hoverClass
-      })
-    }
-  }
-  return cells
+const cells = computed(() => {
+  const cols = Math.ceil(width.value / SIZE)
+  const rows = Math.ceil(height.value / SIZE)
+  return cols * rows
 })
 
-// Throttle resize updates to reduce calculations
-const updateGrid = useThrottleFn(() => {
-  cols.value = Math.ceil(window.innerWidth / SIZE)
-  rows.value = Math.ceil(window.innerHeight / SIZE)
-}, 200) // 200ms throttle
+const gridStyle = computed(() => ({
+  gridTemplateColumns: `repeat(auto-fill, ${SIZE}px)`,
+  width: `${width.value}px`,
+  height: `${height.value}px`,
+}))
 
-onMounted(() => {
-  updateGrid()
-  window.addEventListener('resize', updateGrid)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', updateGrid)
-})
-
-// Memoize color classes
+// Precompute color classes
 const colorClasses = [
-  'hover:fill-red-500/30',
-  'hover:fill-blue-500/30',
-  'hover:fill-green-500/30',
-  'hover:fill-yellow-500/30',
-  'hover:fill-purple-500/30',
-  'hover:fill-pink-500/30',
-  'hover:fill-indigo-500/30',
-  'hover:fill-orange-500/30',
-  'hover:fill-gray-300/30',
+  'hover:bg-red-500/30',
+  'hover:bg-blue-500/30',
+  'hover:bg-green-500/30',
+  'hover:bg-yellow-500/30',
+  'hover:bg-purple-500/30',
+  'hover:bg-pink-500/30',
+  'hover:bg-indigo-500/30',
+  'hover:bg-orange-500/30',
+  'hover:bg-gray-300/30',
 ]
 
-function getRandomColorHover() {
-  return colorClasses[Math.floor(Math.random() * colorClasses.length)]
-}
+const getRandomColorClass = () => 
+  colorClasses[Math.floor(Math.random() * colorClasses.length)]
 </script>
 
 <template>
-  <div class="min-h-screen relative">
-    <svg
-      class="absolute inset-0 h-full w-full stroke-gray-300/20 transition-all duration-100 dark:stroke-gray/20"
-      xmlns="http://www.w3.org/2000/svg"
+  <div class="skew-y-[20deg] min-h-screen relative overflow-hidden">
+    <!-- Grid using CSS -->
+    <div 
+      class="absolute inset-0 group grid gap-[1px] bg-gray-300/20 dark:bg-gray-700/20"
+      :style="gridStyle"
     >
-      <defs>
-        <radialGradient
-          id="fade-gradient"
-          cx="50%"
-          cy="50%"
-          r="80%"
-        >
-          <stop
-            offset="10%"
-            stop-color="white"
-            stop-opacity="1"
-          />
-          <stop
-            offset="100%"
-            stop-color="black"
-            stop-opacity="0"
-          />
-        </radialGradient>
-        <mask id="fade-mask">
-          <rect
-            width="100%"
-            height="100%"
-            fill="url(#fade-gradient)"
-          />
-        </mask>
-      </defs>
-      <!-- Grid Cells -->
-      <g>
-        <rect
-          v-for="(cell, index) in gridCells"
-          :key="index"
-          :x="cell.x"
-          :y="cell.y"
-          :width="SIZE"
-          :height="SIZE"
-          mask="url(#fade-mask)"
-          class="transition-all duration-200 ease-in-out fill-transparent"
-          :class="cell.class"
-        />
-      </g>
-    </svg>
+      <div
+        v-for="i in cells"
+        :key="i"
+        class=" transition-colors duration-500 inner-shadow shadow-sm shadow-white/10"
+        :class="getRandomColorClass()"
+      />
+    </div>
+
+    <!-- Radial gradient overlay -->
+    <div 
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(circle at center, transparent 0%, black 100%)"
+    />
+    
     <slot />
   </div>
 </template>
