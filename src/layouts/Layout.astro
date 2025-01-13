@@ -16,7 +16,7 @@ import { Header } from "../components/shared/Header";
 		<title>{pageTitle}</title>
 	</head>
 	<body class="dark mt-[40px]">
-		<Header client:load />
+		<Header client:only="react" />
 		<slot />
 	</body>
 </html>
