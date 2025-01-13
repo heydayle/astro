@@ -2,7 +2,7 @@
 
 import React from "react";
 import { TextAnimate } from '../ui/text-animate.tsx'
-import {DockDemo} from "@/components/shared/Dock.tsx";
+import { DockDemo } from "@/components/shared/Dock.tsx";
 
 export function Header() {
     return (
