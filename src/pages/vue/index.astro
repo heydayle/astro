@@ -1,8 +1,27 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Vue from "../../components/Vue.vue"
+import Sidebar from '@/components/vue/Sidebar.vue';
 ---
 
 <Layout title="Vue">
-    <Vue client:load/>
+    <div class="flex">
+        <Sidebar client:only="vue"/>
+        <div class="p-4 smooth-scroll">
+            <div id="personal" class="h-screen">
+                <h1>Personal</h1>
+            </div>
+            <div id="technical" class="h-screen">
+                <h1>Skills</h1>
+            </div>
+            <div id="work-experience" class="h-screen">
+                <h1>Experience</h1>
+            </div>
+            <div id="projects" class="h-screen">
+                <h1>Projects</h1>
+            </div>
+            <div id="contact" class="h-screen">
+                <h1>Contact</h1>
+            </div>
+        </div>
+    </div>
 </Layout>

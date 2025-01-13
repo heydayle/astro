@@ -1,18 +1,33 @@
 ---
 import InteractiveGridPattern from "../components/InteractiveGridPattern.vue";
-import Layout from "../layouts/LayoutHome.astro";
-import { Header } from "../components/shared/Header";
+import Layout from "../layouts/Layout.astro";
+import MorphingText from "../components/ui/morphing-text";
+import AnimatedGradientText from "../components/ui/animated-gradient-text";
+import { cn } from "@/lib/utils";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const texts = [
+  'Hello,',
+  "DEVALOKA",
+]
 ---
 
 <Layout>
-  <InteractiveGridPattern client:load class="bg-black">
+  <InteractiveGridPattern client:load>
     <h1
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 text-white text-center text-2xl uppercase"
+      class="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-white text-center text-2xl"
     >
-      <Header client:only="react"/>
+      <MorphingText texts={texts} client:only="react" className="w-screen m-auto text-center whitespace-nowrap" />
+      <a href="vue" class="block mt-4">
+        <AnimatedGradientText client:only="react" className="mt-4 bg-black cursor-pointer">
+          <span
+            class={cn(
+              `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`,
+            )}
+          >
+            Explore
+          </span>
+        </AnimatedGradientText>
+      </a>
     </h1>
   </InteractiveGridPattern>
 </Layout>

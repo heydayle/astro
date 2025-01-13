@@ -5,15 +5,13 @@ const cols = ref(0)
 const rows = ref(0)
 
 const updateGrid = () => {
-  cols.value = 0
-  rows.value = 0
-  cols.value = Math.ceil((window.innerWidth) / 50)
-  rows.value = Math.ceil((window.innerHeight) / 50)
+  cols.value = Math.ceil((window.innerWidth) / 30)
+  rows.value = Math.ceil((window.innerHeight) / 30)
 }
 const { resume } = useIntervalFn(() => updateGrid(), 1400)
 
 onMounted(() => {
-  resume()
+  updateGrid()
   window.addEventListener('resize', updateGrid)
 })
 
@@ -25,13 +23,28 @@ const getRandomClass = () => {
   if (random < 0.01) return 'fill-slate-100/10'
   return 'fill-transparent'
 }
+const getRandomColorHover = () => {
+  const colors = [
+    'hover:fill-red-500/30',
+    'hover:fill-blue-500/30',
+    'hover:fill-green-500/30',
+    'hover:fill-yellow-500/30',
+    'hover:fill-purple-500/30',
+    'hover:fill-pink-500/30',
+    'hover:fill-indigo-500/30',
+    'hover:fill-orange-500/30',
+    'hover:fill-gray-300/30',
+  ];
+  
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 </script>
 
 <template>
   <div class="min-h-screen relative">
     <!-- Grid Background -->
     <svg
-      class="absolute inset-0 h-full w-full stroke-gray-300/10 transition-all duration-300 dark:stroke-gray/10"
+      class="absolute inset-0 h-full w-full stroke-gray-300/20 transition-all duration-100 dark:stroke-gray/20"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
@@ -39,16 +52,16 @@ const getRandomClass = () => {
           id="fade-gradient"
           cx="50%"
           cy="50%"
-          r="100%"
+          r="80%"
         >
           <stop
-            offset="70%"
+            offset="10%"
             stop-color="white"
             stop-opacity="1"
           />
           <stop
             offset="100%"
-            stop-color="white"
+            stop-color="black"
             stop-opacity="0"
           />
         </radialGradient>
@@ -71,13 +84,13 @@ const getRandomClass = () => {
             :key="`row-${y}`"
           >
             <rect
-              :x="(x - 1) * 50"
-              :y="(y - 1) * 50"
-              width="50"
-              height="50"
+              :x="(x - 1) * 30"
+              :y="(y - 1) * 30"
+              width="30"
+              height="30"
               mask="url(#fade-mask)"
-              :class="getRandomClass()"
-              class="transition-all duration-300 ease-in-out hover:fill-slate-100/10"
+              class="transition-all duration-100 ease-in-out"
+              :class="getRandomColorHover()"
             />
           </template>
         </template>
