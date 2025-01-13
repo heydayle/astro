@@ -9,8 +9,8 @@ const cells = ref(1)
 
 onMounted(() => {
   if (width.value && height.value) {
-    const cols = Math.ceil(width.value / SIZE) || 1
-    const rows = Math.ceil(height.value / SIZE) || 1
+    const cols = Math.ceil((width.value) / SIZE)
+    const rows = Math.ceil((height.value) / SIZE)
     cells.value = cols * rows
   }
 })
@@ -39,10 +39,10 @@ const getRandomColorClass = () =>
 </script>
 
 <template>
-  <div class="skew-y-[20deg] min-h-screen relative overflow-hidden">
+  <div class="min-h-screen relative overflow-hidden">
     <!-- Grid using CSS -->
     <div 
-      class="absolute inset-0 group grid gap-[1px] bg-gray-300/20 dark:bg-gray-700/20"
+      class="skew-y-[20deg] scale-150 absolute inset-0 group grid gap-[1px] bg-gray-300/20 dark:bg-gray-700/20"
       :style="gridStyle"
     >
       <div

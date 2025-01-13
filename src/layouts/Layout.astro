@@ -1,9 +1,8 @@
 ---
-import { DockDemo } from '@/components/shared/Header'
 const { title } = Astro.props;
 const pageTitle = title || "Astro";
 import '@/styles/global.css'
-import {Header} from "../components/shared/Header";
+import { Header } from "../components/shared/Header";
 ---
 
 <!doctype html>
@@ -16,7 +15,8 @@ import {Header} from "../components/shared/Header";
 		<!--<link rel="stylesheet" href="../styles/global.css" />-->
 		<title>{pageTitle}</title>
 	</head>
-	<body class="dark">
+	<body class="dark mt-[40px]">
+		<Header client:load />
 		<slot />
 	</body>
 </html>

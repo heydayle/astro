@@ -4,22 +4,24 @@ import Sidebar from '@/components/vue/Sidebar.vue';
 ---
 
 <Layout title="Vue">
-    <div class="flex">
-        <Sidebar client:only="vue"/>
-        <div class="p-4 smooth-scroll">
-            <div id="personal" class="h-screen">
+    <div class="grid grid-cols-[240px,1fr]">
+        <div class="">
+            <Sidebar client:only="vue"/>
+        </div>
+        <div class="p-4 flex-1 smooth-scroll">
+            <div id="personal" class="h-[calc(100vh-40px)]">
                 <h1>Personal</h1>
             </div>
-            <div id="technical" class="h-screen">
+            <div id="technical" class="h-[calc(100vh-40px)]">
                 <h1>Skills</h1>
             </div>
-            <div id="work-experience" class="h-screen">
+            <div id="work-experience" class="h-[calc(100vh-40px)]">
                 <h1>Experience</h1>
             </div>
-            <div id="projects" class="h-screen">
+            <div id="projects" class="h-[calc(100vh-40px)]">
                 <h1>Projects</h1>
             </div>
-            <div id="contact" class="h-screen">
+            <div id="contact" class="h-[calc(100vh-40px)]">
                 <h1>Contact</h1>
             </div>
         </div>
