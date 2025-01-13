@@ -99,7 +99,7 @@ function getRandomColorHover() {
           :width="SIZE"
           :height="SIZE"
           mask="url(#fade-mask)"
-          class="transition-all duration-0 ease-in-out fill-transparent"
+          class="transition-all duration-200 ease-in-out fill-transparent"
           :class="cell.class"
         />
       </g>
