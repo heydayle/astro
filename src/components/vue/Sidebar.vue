@@ -29,7 +29,7 @@ const navigateId = (id: string) => {
   const offset = 16;
   const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
 
-  target.parentNode?.scrollTo({
+  window.scrollTo({
       top: targetPosition,
       behavior: 'smooth'
   });
