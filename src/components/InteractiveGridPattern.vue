@@ -86,8 +86,8 @@ const getRandomColorHover = () => {
             <rect
               :x="(x - 1) * 70"
               :y="(y - 1) * 70"
-              width="30"
-              height="30"
+              width="70"
+              height="70"
               mask="url(#fade-mask)"
               class="transition-all duration-100 ease-in-out"
               :class="getRandomColorHover()"
