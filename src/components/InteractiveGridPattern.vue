@@ -1,14 +1,34 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useIntervalFn } from '@vueuse/core'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { useThrottleFn } from '@vueuse/core'
+
 const cols = ref(0)
 const rows = ref(0)
+const SIZE = 50
 
-const updateGrid = () => {
-  cols.value = Math.ceil((window.innerWidth) / 70)
-  rows.value = Math.ceil((window.innerHeight) / 70)
-}
-const { resume } = useIntervalFn(() => updateGrid(), 1400)
+// Compute grid cells only when dimensions change
+const gridCells = computed(() => {
+  const cells = []
+  for (let x = 0; x < cols.value; x++) {
+    for (let y = 0; y < rows.value; y++) {
+      // Pre-compute random hover color class
+      const hoverClass = getRandomColorHover()
+      cells.push({
+        x: x * SIZE,
+        y: y * SIZE,
+        size: SIZE,
+        class: hoverClass
+      })
+    }
+  }
+  return cells
+})
+
+// Throttle resize updates to reduce calculations
+const updateGrid = useThrottleFn(() => {
+  cols.value = Math.ceil(window.innerWidth / SIZE)
+  rows.value = Math.ceil(window.innerHeight / SIZE)
+}, 200) // 200ms throttle
 
 onMounted(() => {
   updateGrid()
@@ -18,31 +38,27 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', updateGrid)
 })
-const getRandomClass = () => {
-  const random = Math.random(1, 10)
-  if (random < 0.01) return 'fill-slate-100/10'
-  return 'fill-transparent'
-}
-const getRandomColorHover = () => {
-  const colors = [
-    'hover:fill-red-500/30',
-    'hover:fill-blue-500/30',
-    'hover:fill-green-500/30',
-    'hover:fill-yellow-500/30',
-    'hover:fill-purple-500/30',
-    'hover:fill-pink-500/30',
-    'hover:fill-indigo-500/30',
-    'hover:fill-orange-500/30',
-    'hover:fill-gray-300/30',
-  ];
-  
-  return colors[Math.floor(Math.random() * colors.length)];
+
+// Memoize color classes
+const colorClasses = [
+  'hover:fill-red-500/30',
+  'hover:fill-blue-500/30',
+  'hover:fill-green-500/30',
+  'hover:fill-yellow-500/30',
+  'hover:fill-purple-500/30',
+  'hover:fill-pink-500/30',
+  'hover:fill-indigo-500/30',
+  'hover:fill-orange-500/30',
+  'hover:fill-gray-300/30',
+]
+
+function getRandomColorHover() {
+  return colorClasses[Math.floor(Math.random() * colorClasses.length)]
 }
 </script>
 
 <template>
   <div class="min-h-screen relative">
-    <!-- Grid Background -->
     <svg
       class="absolute inset-0 h-full w-full stroke-gray-300/20 transition-all duration-100 dark:stroke-gray/20"
       xmlns="http://www.w3.org/2000/svg"
@@ -75,25 +91,17 @@ const getRandomColorHover = () => {
       </defs>
       <!-- Grid Cells -->
       <g>
-        <template
-          v-for="x in cols"
-          :key="`col-${x}`"
-        >
-          <template
-            v-for="y in rows"
-            :key="`row-${y}`"
-          >
-            <rect
-              :x="(x - 1) * 70"
-              :y="(y - 1) * 70"
-              width="70"
-              height="70"
-              mask="url(#fade-mask)"
-              class="transition-all duration-100 ease-in-out"
-              :class="getRandomColorHover()"
-            />
-          </template>
-        </template>
+        <rect
+          v-for="(cell, index) in gridCells"
+          :key="index"
+          :x="cell.x"
+          :y="cell.y"
+          :width="SIZE"
+          :height="SIZE"
+          mask="url(#fade-mask)"
+          class="transition-all duration-0 ease-in-out fill-transparent"
+          :class="cell.class"
+        />
       </g>
     </svg>
     <slot />
