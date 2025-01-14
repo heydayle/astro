@@ -48,7 +48,7 @@ const getRandomColorClass = () =>
       <div
         v-for="i in cells"
         :key="i"
-        class=" transition-colors duration-500 inner-shadow shadow-sm shadow-white/10"
+        class=" transition-colors duration-0 inner-shadow shadow-sm shadow-white/10"
         :class="getRandomColorClass()"
       />
     </div>
